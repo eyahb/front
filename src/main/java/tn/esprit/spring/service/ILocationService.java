@@ -7,12 +7,20 @@ import tn.esprit.spring.entity.Location;
 
 public interface ILocationService {
 
-	public Long addLoc(Location loc);
-
-	public void deleteLoc(String id);
+	
 
 	public List<Location> retrieveAllLocations();
 	
 	Location updateLoc(Location loc);
+	
+	
+	
+
+	public long addOrUpdateLocation(Location location);
+	
+	public List<Location> getAllLocations();
+	public void deleteLocationById(String locationId);
+	
+	
 
 }

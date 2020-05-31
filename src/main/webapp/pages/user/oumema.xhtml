@@ -1,12 +1,15 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
  xmlns:f="http://java.sun.com/jsf/core" 
  xmlns:h="http://java.sun.com/jsf/html" 
  xmlns:ui="http://java.sun.com/jsf/facelets" 
- template="/template/template.xhtml">
+ xmlns:p="http://primefaces.org/ui"
+ >
 <ui:param name="page_name" value="Accueil" />
 <ui:define name="content"> 
 <!-- BEGIN : TP1 JSF Introduction Login --> 
+ 
 
+<!-- BEGIN : TP1 JSF Introduction Login --> 
 
 
 
@@ -24,23 +27,189 @@
 </h:head>
 
 
+<h:body>
+<script type="text/javascript">
+    PrimeFaces.locales['es'] = {
+        closeText: 'Cerrar',
+        prevText: 'Anterior',
+        nextText: 'Siguiente',
+        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+        dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+        weekHeader: 'Semana',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: '',
+        timeOnlyTitle: 'Sólo hora',
+        timeText: 'Tiempo',
+        hourText: 'Hora',
+        minuteText: 'Minuto',
+        secondText: 'Segundo',
+        currentText: 'Fecha actual',
+        ampm: false,
+        month: 'Mes',
+        week: 'Semana',
+        day: 'Día',
+        allDayText: 'Todo el día'
+    };
+    PrimeFaces.locales ['de'] = {
+        closeText: 'Schließen',
+        prevText: 'Zurück',
+        nextText: 'Weiter',
+        monthNames: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember' ],
+        monthNamesShort: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez' ],
+        dayNames: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+        dayNamesShort: ['Son', 'Mon', 'Die', 'Mit', 'Don', 'Fre', 'Sam'],
+        dayNamesMin: ['S', 'M', 'D', 'M ', 'D', 'F ', 'S'],
+        weekHeader: 'Woche',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix:'',
+        timeOnlyTitle: 'Nur Zeit',
+        timeText: 'Zeit',
+        hourText: 'Stunde',
+        minuteText: 'Minute',
+        secondText: 'Sekunde',
+        currentText: 'Aktuelles Datum',
+        ampm: false,
+        month: 'Monat',
+        week: 'Woche',
+        day: 'Tag',
+        allDayText: 'Ganzer Tag'
+    };
+</script>
+ 
+<script type="text/javascript">
+    //<![CDATA[
+    function dateTemplateFunc(date) {
+        return '<span style="background-color:' + ((date.day < 21 && date.day > 10) ? '#81C784' : 'inherit') + ';border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;">' + date.day + '</span>';
+    }
+    //]]>
+</script>
+ 
+<style type="text/css">
+    .value {
+        font-weight: bold;
+    }
+</style>
+  <h:panelGroup columns="2" cellpadding="5">
+			<h:form id="form">
+			<p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true" />
+				<table>
+				
+					<tr>
+						<td><h:outputText value="dateDepart" ></h:outputText></td>
+						
+						<td><p:calendar id="date" pattern="dd-MM-yyyy" locale="pt" required="true" value="#{locationController.dateDepart}">
+          
+                </p:calendar></td>
+					</tr>
+					<tr>
+						<td><h:outputText  value="dateArrivee" ></h:outputText></td>
+					
+						<td><h:inputText value="#{locationController.dateArrivee}">
+                <f:convertDateTime pattern="dd-MM-yyyy" />
+                </h:inputText></td>
+					</tr>
+					<tr>
+						<td><h:outputText value="nbPersonne"></h:outputText></td>
+						<td><h:inputText value="#{locationController.nbPersonne}"></h:inputText></td>
+					</tr>
+					<tr>
+							<td colspan="2">
+							<h:commandButton value="add location" action="#{locationController.addLocation()}"></h:commandButton>
+					        </td>
+						</tr>
+					</table>
+					</h:form>
+					</h:panelGroup>
+			<p:growl id="messages" showDetail="true" />
+ 
+    Single file<br />
+<h:form enctype="multipart/form-data">        
+    <p:fileUpload value="#{fileUploadView.file}" mode="simple" skinSimple="true"/>
+    <br />
+    <p:commandButton value="Submit" ajax="false"  action="#{fileUploadView.upload()}" ></p:commandButton>
+</h:form> 
+<h3>Upload Multiple Files</h3>
+     <h:form id="uploadFiles" name="uploadFiles" method="post" action="#{DocController.uploadMultipleFiles()}" encType="multipart/form-data">
+       <input type="file" name="files" multiple="true" required="true" />
+       <p:commandButton value="Submit" ajax="false"  ></p:commandButton>
+     </h:form>
+					
+		<h:form enctype="multipart/form-data">
+		
+		<p:growl showDetail="true" />
+		
+		<p:fileUpload value="#{imageStoreBean.file}" mode="simple" />
+		
+		<p:commandButton value="Submit" ajax="false" actionListener="#{imageStoreBean.storeImage()}" />
+		
+		
+		
+		</h:form>
+		
+		
+			
+	 <h:form enctype="multipart/form-data">
+         <p:fileUpload fileUploadListener="#{fileUploadView.upload}"  ajax="false" update="@this" process="@this"  mode="advanced" dragDropSupport="false" multiple="true" sizeLimit="10000000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+         	
+         <p:growl id="messages" showDetail="true" />
+         
+         <h3>Maximum size: 1 MB</h3>
+      </h:form>
+					<h:form enctype="multipart/form-data" style="width:500px">
+				<p:growl id="msg"></p:growl>
+				<p:fileUpload value="#{fileUploadManagedBean.file}" ajax="false" mode="advanced" disabled="false" multiple="true" 
+								fileUploadListener="#{fileUploadManagedBean.fileUploadListener}" update="msg"></p:fileUpload>
+		</h:form>
+					
+					
+					
+					
+				<h:form name="formAction" enctype="multipart/form-data">
+<p:fileUpload id="fileactUploadID" value="#{fileUploadView.uploadAttachment}" fileUploadListener="#{fileUploadView.handleFileUpload}"
+										  			allowTypes="/(\.|\/)(gif|jpe?g|png)$/" mode="advanced" auto="true" label="Choose" multiple="true" description="Select Images"/>
+</h:form>	
+					
+	<script type="text/javascript">
+$(function () {
+    'use strict';
+    // Change this to the location of your server-side upload handler:
+    var url = 'xUpload.xsp';
+    $('#fileupload').fileupload({
+        url: url,
+        dataType: 'json',
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                $('<p/>').text(file.name).appendTo('#files');
+            });
+        },
+       ...
+});
+</script>
 
-
-
-
-
-
-
-
-
-<body>
-
-  
-            
-            
-            
-            
-
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
 
 <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
 
@@ -50,6 +219,9 @@
     <script type="text/javascript" src="../../resources/assets/js/vendor.js"></script>
    
     <script type="text/javascript" src="../../resources/assets/js/demodata.js"></script>
+    <script type="text/javascript" src="../../resources/assets/js/jquery.ui.widget.js"></script>
+    <script type="text/javascript" src="../../resources/assets/js/jquery.fileupload.js"></script>
+    
  
     <script type="text/javascript" src="../../resources/assets/js/app.js"></script>
  
@@ -57,7 +229,7 @@
     
    
     
-    </body>
+    </h:body>
     
 </ui:define>
-</ui:composition>
+</html>

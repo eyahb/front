@@ -17,15 +17,6 @@ public class LocationService implements ILocationService {
 	LocationRepository locrep;
 	public static final Logger L = LogManager.getLogger(ILocationService.class);
 
-	public Long addLoc(Location loc) {
-		locrep.save(loc);
-		return loc.getId();
-	}
-
-	@Override
-	public void deleteLoc(String id) {
-		locrep.deleteById(Long.parseLong(id));
-	}
 
 	@Override
 	public List<Location> retrieveAllLocations() {
@@ -42,5 +33,30 @@ public class LocationService implements ILocationService {
 		return locrep.save(loc);
 
 	}
+	@Override
+	public long addOrUpdateLocation(Location location) {
+		locrep.save(location);
+		return location.getId();
+	}
+	@Override
+	public List<Location> getAllLocations() {
+		return (List<Location>) locrep.findAll();}
+	
+	
+	public void deleteLocationById(String locationId) {
+		
+		//Location location = locrep.findById(locationId).get();
+
+		//locrep.delete(location);
+		//annRepository.deleteById(Long.parseLong(id));
+		locrep.deleteById(Long.parseLong(locationId));
+	}
+	
+	
+	
+
+
+
+	
 
 }

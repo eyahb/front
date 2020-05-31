@@ -1,0 +1,299 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:f="http://java.sun.com/jsf/core" 
+ xmlns:h="http://java.sun.com/jsf/html" 
+ xmlns:ui="http://java.sun.com/jsf/facelets"
+ xmlns:p="http://primefaces.org/ui" 
+ template="/template/template2.xhtml">
+<ui:param name="page_name" value="Accueil" />
+<ui:define name="content"> 
+<!-- BEGIN : TP1 JSF Introduction Login --> 
+<h:head>
+<link href="../../resources/assets/css/vendor.css"  rel="stylesheet" />
+		<link href="../../resources/assets/css/font-awesome.css"  rel="stylesheet" />
+		<link href="../../resources/assets/css/theme-light_blue-beige.css"  rel="stylesheet" />
+		<link href="../..resources/assets/css/custom.css"  rel="stylesheet" />
+		<link href="../../resources/assets/css/ie-fix.css"  rel="stylesheet" />
+		<link href="../../resources/assets/img/favicon.ico" rel="stylesheet" />
+		<link href="../../resources/assets/img/favicon.ico" rel="stylesheet" type="image/x-icon" />
+		<h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+		<script type='text/javascript'>
+		jQuery(function(){ var jq = jQuery.noConflict(true);});
+    	</script>
+    <script type='text/javascript'>
+    document.addEventListener('wheel', function(e) {
+    e.preventDefault();
+    doStuff(e);
+}, { passive: false });</script>  
+</h:head>
+<h:body>
+
+
+
+
+<h:panelGroup columns="2" cellpadding="5">
+	<div class="site-wrap js-site-wrap">
+        <div class="widget js-widget widget--landing widget--bg">
+         <div class="widget__header"  style="width:800px; height: 400px">
+            <h2 class="widget__title"><span class="title-thin">Find your</span> home</h2>
+          </div>
+          <div class="widget__content">
+           <h:form action="properties_listing_list.html" class="form form--flex form--search js-search-form form--wide" style="width:990px;
+                     height: 350px; position: absolute;left: 10%;top: 250px"> 
+              <div class="row">
+        <div class="form-group"  >
+        <p:outputLabel for="@next" value="Location:" class="control-label" />
+        
+      
+        <p:selectOneMenu id="city" value="#{selectOneMenuView.city}" effect="fold" editable="true">
+            <f:selectItem itemLabel="Select One" itemValue="" />
+            <f:selectItems value="#{selectOneMenuView.cities}" />
+        </p:selectOneMenu>
+        
+        </div>
+        
+        <div class="form-group" > 
+         <p:outputLabel for="@next" value="Property Type:" class="control-label"  />
+    
+        <p:selectOneMenu id="advanced" value="#{selectOneMenuView.theme}" converter="#{themeConverter}" panelStyle="width:180px"
+        effect="fade" var="t" style="width:160px" filter="true" filterMatchMode="startsWith">
+       <f:selectItems value="#{selectOneMenuView.themes}" var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme}" />
+ 
+  <p:column style="width:10%">
+                <h:graphicImage name="showcase/images/themeswitcher/themeswitcher-#{t.name}.png" alt="#{t.name}" styleClass="ui-theme" />
+            </p:column>
+ 
+            <p:column>
+               <f:facet name="header">
+                   <h:outputText value="Name"/>
+                </f:facet>
+                <h:outputText value="#{t.displayName}" />
+            </p:column>
+             
+            <f:facet name="footer">
+               <p:separator />
+               <h:outputText value="#{selectOneMenuView.themes.size()} themes" style="font-weight:bold;"/>
+            </f:facet>
+        </p:selectOneMenu>
+        </div>
+       
+        <div class="form-group">
+        
+         <p:outputLabel for="@next" value="Bedrooms:"  class="control-label" />
+        <p:selectOneMenu id="longItemLabel" value="#{selectOneMenuView.longItemLabel}" style="width:100px">
+            <f:selectItem itemLabel="S+1" itemValue="1" />
+            <f:selectItem itemLabel="S+2" itemValue="2" />
+            <f:selectItem itemLabel="S+3" itemValue="3" />
+            <f:selectItem itemLabel="S+4" itemValue="4" />
+            <f:selectItem itemLabel="S+5" itemValue="5" />
+        </p:selectOneMenu>
+        
+        </div>
+        
+        
+         <div class="form-group">
+        
+         <p:outputLabel for="@next" value="Bathrooms:"  class="control-label" />
+        <p:selectOneMenu id="longItemLabel1" style="width:100px">
+            <f:selectItem itemLabel="1" itemValue="1" />
+            <f:selectItem itemLabel="2" itemValue="2" />
+            <f:selectItem itemLabel="3" itemValue="3" />
+        </p:selectOneMenu>
+        
+        </div>
+        
+        <div class="form-group">
+        
+         <p:outputLabel for="@next" value="pieces:"  class="control-label" />
+        <p:selectOneMenu id="longItemLabel2" style="width:100px">
+            <f:selectItem itemLabel="1" itemValue="1" />
+            <f:selectItem itemLabel="2" itemValue="2" />
+            <f:selectItem itemLabel="3" itemValue="3" />
+        </p:selectOneMenu>
+        
+        </div>
+        
+        
+        <div class="form-group" > 
+         <h:form>
+    <p:growl id="growl" showDetail="true" />
+     <p:outputLabel for="@next" value="Price:"  class="control-label" />
+    <h:panelGrid columns="1" style="margin-bottom: 10px">
+        <p:spinner id="spinner1" value="#{sliderView.number3}" min="0" max="1000" stepFactor="50" suffix=" €" valueChangeListener="#{sliderView.onInputChanged}">
+            <p:ajax process="@this" update="growl" />
+        </p:spinner>
+        <p:slider for="spinner1" minValue="0" maxValue="1000" step="50" />
+    </h:panelGrid>
+     <p:separator />
+ 
+    <p:dialog header="Slider Values" showEffect="fade" hideEffect="fade" widgetVar="dlg">
+        <h:panelGrid id="display" columns="1" cellpadding="5">
+            <h:outputText value="Number 1: #{sliderView.number1}" />
+ 
+            <h:outputText value="Number 2: #{sliderView.number2}" />
+ 
+            <h:outputText value="Number 3: #{sliderView.number3}" />
+ 
+            <h:outputText value="Number 4: #{sliderView.number4}" />
+ 
+            <h:outputText value="Number 5: #{sliderView.number5}" />
+ 
+            <h:outputText value="Number 6: #{sliderView.number6}" />
+ 
+            <h:outputText value="Number 7: #{sliderView.number7}" />
+ 
+            <h:outputText value="Range: [#{sliderView.number8},#{sliderView.number9}]" />
+        </h:panelGrid>
+    </p:dialog>
+</h:form>
+       </div> 
+         <div class="form-group"  > 
+       <h:form>
+    <p:growl id="growl" showDetail="true" />
+     <p:outputLabel for="@next" value="Habitable Area:"  class="control-label" />
+    <h:panelGrid columns="1" style="margin-bottom: 10px">
+        <p:spinner id="spinner1" value="#{sliderView.number3}" min="0" max="1000" stepFactor="50" suffix=" sq ft" valueChangeListener="#{sliderView.onInputChanged}">
+            <p:ajax process="@this" update="growl" />
+        </p:spinner>
+        <p:slider for="spinner1" minValue="0" maxValue="1000" step="50" />
+    </h:panelGrid>
+     <p:separator />
+ 
+    
+ 
+    <p:dialog header="Slider Values" showEffect="fade" hideEffect="fade" widgetVar="dlg">
+        <h:panelGrid id="display" columns="1" cellpadding="5">
+            <h:outputText value="Number 1: #{sliderView.number1}" />
+ 
+            <h:outputText value="Number 2: #{sliderView.number2}" />
+ 
+            <h:outputText value="Number 3: #{sliderView.number3}" />
+ 
+            <h:outputText value="Number 4: #{sliderView.number4}" />
+ 
+            <h:outputText value="Number 5: #{sliderView.number5}" />
+ 
+            <h:outputText value="Number 6: #{sliderView.number6}" />
+ 
+            <h:outputText value="Number 7: #{sliderView.number7}" />
+ 
+            <h:outputText value="Range: [#{sliderView.number8},#{sliderView.number9}]" />
+       
+        </h:panelGrid>
+    </p:dialog>
+</h:form>  
+</div> 
+        
+        
+  <div class="form-group" >    
+  <h:form>
+    <p:growl id="growl" showDetail="true" />
+     <p:outputLabel for="@next" value="Ground Area:"  class="control-label" />
+    <h:panelGrid columns="1" style="margin-bottom: 10px">
+        <p:spinner id="spinner1" value="#{sliderView.number3}" min="0" max="1000" stepFactor="50" suffix=" sq ft" valueChangeListener="#{sliderView.onInputChanged}">
+            <p:ajax process="@this" update="growl" />
+        </p:spinner>
+        <p:slider for="spinner1" minValue="0" maxValue="1000" step="50" />
+    </h:panelGrid>
+     <p:separator />
+ 
+    
+ 
+    <p:dialog header="Slider Values" showEffect="fade" hideEffect="fade" widgetVar="dlg">
+        <h:panelGrid id="display" columns="1" cellpadding="5">
+            <h:outputText value="Number 1: #{sliderView.number1}" />
+ 
+            <h:outputText value="Number 2: #{sliderView.number2}" />
+ 
+            <h:outputText value="Number 3: #{sliderView.number3}" />
+ 
+            <h:outputText value="Number 4: #{sliderView.number4}" />
+ 
+            <h:outputText value="Number 5: #{sliderView.number5}" />
+ 
+            <h:outputText value="Number 6: #{sliderView.number6}" />
+ 
+            <h:outputText value="Number 7: #{sliderView.number7}" />
+ 
+            <h:outputText value="Range: [#{sliderView.number8},#{sliderView.number9}]" />
+        </h:panelGrid>
+    </p:dialog>
+</h:form>         
+</div>
+
+
+<div class="form__buttons form__buttons--double" style="height: 20px;top: 50px">
+<p:commandButton value="Reset"  class="form__reset js-form-reset"  style="height: 40px" />
+<p:commandButton value="Search"  class="form__submit"  style="height: 40px"/>                  
+                </div>        
+        
+        
+ </div> 
+ </h:form>      
+ </div>       
+</div>
+</div>        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
+
+
+
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=places,drawing,geometry"></script>
+    <script type="text/javascript" src="http://cdn.ckeditor.com/4.5.6/standard/ckeditor.js"></script>
+   
+    <script type="text/javascript" src="../../resources/assets/js/vendor.js"></script>
+   
+    <script type="text/javascript" src="../../resources/assets/js/demodata.js"></script>
+ 
+    <script type="text/javascript" src="../../resources/assets/js/app.js"></script>
+ 
+    <script type="text/javascript" src="../../resources/assets/js/demo.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>  
+<script type="text/javascript">
+    var j$132 = $.noConflict(true);
+</script>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+<script type="text/javascript">
+    var j$144 = $.noConflict(true);
+</script>
+</h:panelGroup>
+</h:body>
+
+
+
+
+
+ 
+       
+	
+    
+</ui:define>
+</ui:composition>
+
+
+
+
+
+
+
+
+
+
+
+

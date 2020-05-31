@@ -14,11 +14,13 @@ import javax.persistence.TemporalType;
 @Entity
 public class Location implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -1396669830860400871L;
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Long id; // Identifiant formation (Clé primaire)
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@Column
+	private Long id;
+	//private int id; // Identifiant formation (Clé primaire)
 	@Temporal(TemporalType.DATE)
 	private Date DateDepart;
 	@Temporal(TemporalType.DATE)
@@ -28,13 +30,21 @@ public class Location implements Serializable {
 	public Location() {
 	}
 
-	public Location(Long id, Date dateDepart, Date dateArrivee, int nbPersonne) {
+	public Location(long id, Date dateDepart, Date dateArrivee, int nbPersonne) {
 		super();
 		this.id = id;
-		DateDepart = dateDepart;
-		DateArrivee = dateArrivee;
+		this.DateDepart = dateDepart;
+		this.DateArrivee = dateArrivee;
 		this.nbPersonne = nbPersonne;
 	}
+
+	public Location(Date dateDepart, Date dateArrivee, int nbPersonne) {
+		this.DateDepart = dateDepart;
+		this.DateArrivee = dateArrivee;
+		this.nbPersonne = nbPersonne;
+	}
+	
+	
 
 	public Long getId() {
 		return id;
@@ -49,7 +59,7 @@ public class Location implements Serializable {
 	}
 
 	public void setDateDepart(Date dateDepart) {
-		DateDepart = dateDepart;
+		this.DateDepart = dateDepart;
 	}
 
 	public Date getDateArrivee() {
@@ -57,7 +67,7 @@ public class Location implements Serializable {
 	}
 
 	public void setDateArrivee(Date dateArrivee) {
-		DateArrivee = dateArrivee;
+		this.DateArrivee = dateArrivee;
 	}
 
 	public int getNbPersonne() {

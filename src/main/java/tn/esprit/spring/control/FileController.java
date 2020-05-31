@@ -1,4 +1,4 @@
-package tn.esprit.spring.control;
+/*package tn.esprit.spring.control;
 
 
 import java.io.BufferedOutputStream;
@@ -86,3 +86,4 @@ public class FileController {
 	                .collect(Collectors.toList());
 	    }
 }
+*/

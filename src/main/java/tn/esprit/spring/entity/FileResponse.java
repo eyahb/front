@@ -1,11 +1,9 @@
 package tn.esprit.spring.entity;
 
-import java.util.Arrays;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import org.springframework.web.multipart.MultipartFile;
+
 
 @Entity
 public class FileResponse {
